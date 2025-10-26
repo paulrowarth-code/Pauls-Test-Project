@@ -129,7 +129,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 4
- await testRunner.GivenAsync("The user logs into the \"Test\" environment as user \"Paul\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("The user logs in", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

@@ -16,12 +16,12 @@ namespace PaulsProject.Steps
             _signUpPage = new SignUpPage(_page);
         }
 
-        [Given("The user logs into the {string} environment as user {string}")]
-        public async Task GivenTheUserLogsIntoTheEnvironmentAsUser(string env, string user)                   
+        [Given("The user logs in")]
+        public async Task GivenTheUserLogsIntoTheEnvironmentAsUser()                   
         {         
-            string selectedEnv = _signUpPage.SelectEnvironment(env);
+            string selectedEnv = _signUpPage.SelectEnvironment();
             await _page.GotoAsync(selectedEnv);
-            var userDetails = _signUpPage.GetUser(user, env);            
+            var userDetails = _signUpPage.GetUser();            
             await _page.GetByRole(AriaRole.Textbox, new() { Name = "Email Address" }).FillAsync(userDetails.Email);
             await _page.GetByRole(AriaRole.Button, new() { Name = "Next" }).ClickAsync();
             await _page.GetByRole(AriaRole.Textbox, new() { Name = "Password" }).FillAsync(userDetails.Password);

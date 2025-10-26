@@ -1,0 +1,4 @@
+{
+  "test": "https://test-app.staffology.co.uk/",
+  "prod": "https://app.staffology.co.uk/",    
+}

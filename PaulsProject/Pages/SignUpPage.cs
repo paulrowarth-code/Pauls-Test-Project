@@ -1,4 +1,5 @@
-﻿using Microsoft.Playwright;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Playwright;
 using Newtonsoft.Json;
 
 namespace PaulsProject.Pages
@@ -18,25 +19,33 @@ namespace PaulsProject.Pages
             public string Password;
         }        
 
-        public string SelectEnvironment(string env)
+        public string SelectEnvironment()
         {
-            switch (env)
-            {
-                case "Test":
-                    return "https://test-app.staffology.co.uk/";
-
-                case "Prod":
-                    return "https://app.staffology.co.uk/";
-            }
-            return "Prod";
+            var builder = new ConfigurationBuilder()            
+            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\appsettings.json", optional: true, reloadOnChange: true);
+            IConfiguration config = builder.Build();
+            string envName = (config.GetValue<string>("environment"));
+            var builder2 = new ConfigurationBuilder()
+           .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\envs.json", optional: true, reloadOnChange: true);
+            IConfiguration config2 = builder2.Build();
+            string env = (config2.GetValue<string>(envName));
+            return env;
         }
 
-        public UserCredentials GetUser(string user, string env)
-        {
-            var filePath = Path.Combine("Users", user + "." + env + ".json");
-            var fileName = File.ReadAllText(filePath);
-            UserCredentials userCredentials = JsonConvert.DeserializeObject<UserCredentials>(fileName);
-            return userCredentials;
+        public UserCredentials GetUser()
+        {            
+            var builder = new ConfigurationBuilder()
+            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\appsettings.json", optional: true, reloadOnChange: true);
+            IConfiguration config = builder.Build();
+            string userName = (config.GetValue<string>("user"));
+          
+            var builder2 = new ConfigurationBuilder()
+            .AddJsonFile($"C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\Users\\{userName}.json", optional: true, reloadOnChange: true);
+            IConfiguration config2 = builder2.Build();
+            UserCredentials user = new UserCredentials();
+            user.Email = (config2.GetValue<string>("email"));
+            user.Password = (config2.GetValue<string>("password"));
+            return user;
         }
     }
 }
