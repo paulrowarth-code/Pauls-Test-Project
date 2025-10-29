@@ -17,14 +17,28 @@ namespace PaulsProject.Pages
         {             
             public string Email;
             public string Password;
-        }        
+        }
+
+        public class AppSettings
+        {
+            public string environment;
+            public string user;
+        }
+
+        public AppSettings GetAppSettings()
+        {
+            var appSettings = new ConfigurationBuilder()
+            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\appsettings.json", optional: true, reloadOnChange: true);
+            IConfiguration appSettingsConfig = appSettings.Build();
+            AppSettings settings = new AppSettings();
+            settings.environment = (appSettingsConfig.GetValue<string>("environment"));
+            settings.user = (appSettingsConfig.GetValue<string>("user"));
+            return settings;
+        }
 
         public string SelectEnvironment()
-        {
-            var builder = new ConfigurationBuilder()            
-            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\appsettings.json", optional: true, reloadOnChange: true);
-            IConfiguration config = builder.Build();
-            string envName = (config.GetValue<string>("environment"));
+        {            
+            string envName = GetAppSettings().environment;
             var builder2 = new ConfigurationBuilder()
            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\envs.json", optional: true, reloadOnChange: true);
             IConfiguration config2 = builder2.Build();
@@ -33,12 +47,8 @@ namespace PaulsProject.Pages
         }
 
         public UserCredentials GetUser()
-        {            
-            var builder = new ConfigurationBuilder()
-            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\appsettings.json", optional: true, reloadOnChange: true);
-            IConfiguration config = builder.Build();
-            string userName = (config.GetValue<string>("user"));
-          
+        {                
+            string userName = GetAppSettings().user;
             var builder2 = new ConfigurationBuilder()
             .AddJsonFile($"C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\Users\\{userName}.json", optional: true, reloadOnChange: true);
             IConfiguration config2 = builder2.Build();
