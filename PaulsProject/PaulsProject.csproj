@@ -28,15 +28,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="envs.json">
+    <None Update="Settings\envs.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="appsettings.json">
+    <None Update="Settings\appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Users\Paul.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\" />
   </ItemGroup>
 
 </Project>

@@ -1,18 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Playwright;
-using Newtonsoft.Json;
 
-namespace PaulsProject.Pages
+namespace PaulsProject.Settings
 {
-    public class SignUpPage
-    {
-        public readonly IPage _page;
-
-        public SignUpPage(IPage page)
-        {
-            _page = page;
-        }
-        
+    public class Settings
+    {        
         public class UserCredentials
         {             
             public string Email;
@@ -28,11 +19,11 @@ namespace PaulsProject.Pages
         public AppSettings GetAppSettings()
         {
             var appSettings = new ConfigurationBuilder()
-            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\appsettings.json", optional: true, reloadOnChange: true);
+            .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\Settings\\appsettings.json", optional: true, reloadOnChange: true);
             IConfiguration appSettingsConfig = appSettings.Build();
             AppSettings settings = new AppSettings();
-            settings.environment = (appSettingsConfig.GetValue<string>("environment"));
-            settings.user = (appSettingsConfig.GetValue<string>("user"));
+            settings.environment = appSettingsConfig.GetValue<string>("environment");
+            settings.user = appSettingsConfig.GetValue<string>("user");
             return settings;
         }
 
@@ -40,9 +31,9 @@ namespace PaulsProject.Pages
         {            
             string envName = GetAppSettings().environment;
             var builder2 = new ConfigurationBuilder()
-           .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\envs.json", optional: true, reloadOnChange: true);
+           .AddJsonFile("C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\Settings\\envs.json", optional: true, reloadOnChange: true);
             IConfiguration config2 = builder2.Build();
-            string env = (config2.GetValue<string>(envName));
+            string env = config2.GetValue<string>(envName);
             return env;
         }
 
@@ -53,8 +44,8 @@ namespace PaulsProject.Pages
             .AddJsonFile($"C:\\Pauls PW Project\\Pauls-Test-Project\\PaulsProject\\Users\\{userName}.json", optional: true, reloadOnChange: true);
             IConfiguration config2 = builder2.Build();
             UserCredentials user = new UserCredentials();
-            user.Email = (config2.GetValue<string>("email"));
-            user.Password = (config2.GetValue<string>("password"));
+            user.Email = config2.GetValue<string>("email");
+            user.Password = config2.GetValue<string>("password");
             return user;
         }
     }

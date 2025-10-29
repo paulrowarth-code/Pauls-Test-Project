@@ -1,5 +1,4 @@
 ﻿using Microsoft.Playwright;
-using PaulsProject.Pages;
 using Reqnroll;
 
 namespace PaulsProject.Steps
@@ -8,20 +7,20 @@ namespace PaulsProject.Steps
     public class Login
     {
         public readonly IPage _page;
-        public readonly SignUpPage _signUpPage;        
+        public readonly Settings.Settings _settings;        
 
         public Login(IPage page)
         {
-            _page = page;
-            _signUpPage = new SignUpPage(_page);
+            _page = page;  
+            _settings = new Settings.Settings();
         }
 
         [Given("The user logs in")]
         public async Task GivenTheUserLogsIntoTheEnvironmentAsUser()                   
         {         
-            string selectedEnv = _signUpPage.SelectEnvironment();
+            string selectedEnv = _settings.SelectEnvironment();
             await _page.GotoAsync(selectedEnv);
-            var userDetails = _signUpPage.GetUser();            
+            var userDetails = _settings.GetUser();            
             await _page.GetByRole(AriaRole.Textbox, new() { Name = "Email Address" }).FillAsync(userDetails.Email);
             await _page.GetByRole(AriaRole.Button, new() { Name = "Next" }).ClickAsync();
             await _page.GetByRole(AriaRole.Textbox, new() { Name = "Password" }).FillAsync(userDetails.Password);
