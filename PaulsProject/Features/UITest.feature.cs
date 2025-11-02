@@ -131,6 +131,42 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line 4
  await testRunner.GivenAsync("The user logs in", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
+#line 5
+ await testRunner.AndAsync("The user creates a new employer", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table1 = new global::Reqnroll.Table(new string[] {
+                            "Title",
+                            "First Name",
+                            "Last Name",
+                            "DOB",
+                            "Start Date",
+                            "NI Number",
+                            "Salary"});
+                table1.AddRow(new string[] {
+                            "Mr",
+                            "Test",
+                            "Employee",
+                            "1980-04-06",
+                            "2025-04-06",
+                            "AB123456C",
+                            "2000"});
+                table1.AddRow(new string[] {
+                            "Ms",
+                            "Sample",
+                            "Worker",
+                            "1990-05-15",
+                            "2025-04-15",
+                            "BA789012A",
+                            "1000"});
+#line 6
+ await testRunner.AndAsync("the user adds new employees as follows:", ((string)(null)), table1, "And ");
+#line hidden
+#line 10
+ await testRunner.AndAsync("The user creates a new pay schedule", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 11
+ await testRunner.AndAsync("The user starts the next pay run", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
             }
             await this.ScenarioCleanupAsync();
         }
