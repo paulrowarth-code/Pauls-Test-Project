@@ -1,19 +1,19 @@
 ﻿using Microsoft.Playwright;
 using Reqnroll;
-
+using FluentAssertions;
 
 namespace PaulsProject.Steps
 {
     [Binding]
     public class CommonSteps
     {
-        public readonly IPage _page;    
+        public readonly IPage _page;         
 
         private readonly ScenarioContext _scenarioContext;
 
         public CommonSteps(IPage page, ScenarioContext scenarioContext)
         {
-            _page = page;
+            _page = page;            
             _scenarioContext = scenarioContext;
         }
 
@@ -41,7 +41,7 @@ namespace PaulsProject.Steps
             await _page.GetByRole(AriaRole.Button, new() { Name = "Update" }).ClickAsync();
         }
 
-        [Given("the user adds new employees as follows:")]
+        [Given("The user adds new employees as follows:")]
         public async Task GivenTheUserAddsANewEmployee(Table table)
         {
             int employeeCount = 0;
@@ -81,5 +81,50 @@ namespace PaulsProject.Steps
         {
             await _page.Locator("a").Filter(new() { HasText = "Start Monthly Pay Run for 1st" }).ClickAsync();
         }
+
+        [Then("The payrun should contain the following:")]
+        public async Task ThenThePayrunShouldContainTheFollowing(DataTable table)
+        {
+            var payTable = _page.Locator("#table-list-paylinex");
+
+            foreach (var row in table.Rows)
+            {
+                await _page.GetByText(row["Employee"]).ClickAsync();
+
+                var monthlyPayRow = payTable.Locator("tr").Filter(new()
+                {
+                    HasText = "Monthly Pay"
+                });                
+                var monthlyPayValue = await monthlyPayRow.Locator("td").Nth(2).InnerTextAsync();
+
+                var taxRow = payTable.Locator("tr").Filter(new()
+                {
+                    HasText = "PAYE Tax"
+                });
+                var taxValue = await taxRow.Locator("td").Nth(2).InnerTextAsync();
+
+                var niRow = payTable.Locator("tr").Filter(new()
+                {
+                    HasText = "National Insurance Contribution"
+                });
+                var niValue = await niRow.Locator("td").Nth(2).InnerTextAsync();
+
+                var takeHomeRow = payTable.Locator("tr").Filter(new()
+                {
+                    HasText = "Take Home Pay"
+                });
+                var takeHomeValue = await takeHomeRow.Locator("td").Nth(2).InnerTextAsync();
+
+                row["Monthly Pay"].Should().Be(monthlyPayValue);
+                row["PAYE Tax"].Should().Be(taxValue);
+                row["National Insurance Contribution"].Should().Be(niValue);
+                row["Take Home Pay"].Should().Be(takeHomeValue);
+
+                await _page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
+            }
+        }
     }
 }
+
+                
+    

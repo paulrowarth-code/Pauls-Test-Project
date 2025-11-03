@@ -159,13 +159,34 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
                             "BA789012A",
                             "1000"});
 #line 6
- await testRunner.AndAsync("the user adds new employees as follows:", ((string)(null)), table1, "And ");
+ await testRunner.AndAsync("The user adds new employees as follows:", ((string)(null)), table1, "And ");
 #line hidden
 #line 10
  await testRunner.AndAsync("The user creates a new pay schedule", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 11
  await testRunner.AndAsync("The user starts the next pay run", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+                global::Reqnroll.Table table2 = new global::Reqnroll.Table(new string[] {
+                            "Employee",
+                            "Monthly Pay",
+                            "PAYE Tax",
+                            "National Insurance Contribution",
+                            "Take Home Pay"});
+                table2.AddRow(new string[] {
+                            "Mr Test Employee",
+                            "1,636.36",
+                            "117.60",
+                            "47.07",
+                            "£1,471.69"});
+                table2.AddRow(new string[] {
+                            "Ms Sample Worker",
+                            "545.45",
+                            "-",
+                            "-",
+                            "£545.45"});
+#line 12
+ await testRunner.ThenAsync("The payrun should contain the following:", ((string)(null)), table2, "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
