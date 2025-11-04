@@ -85,40 +85,27 @@ namespace PaulsProject.Steps
         [Then("The payrun should contain the following:")]
         public async Task ThenThePayrunShouldContainTheFollowing(DataTable table)
         {
+            var columnHeadings = table.Header.ToList();
+            columnHeadings.Remove("Employee");
+            int headerIndex = 0;
+
             var payTable = _page.Locator("#table-list-paylinex");
 
             foreach (var row in table.Rows)
             {
                 await _page.GetByText(row["Employee"]).ClickAsync();
 
-                var monthlyPayRow = payTable.Locator("tr").Filter(new()
+                foreach (var heading in columnHeadings)
                 {
-                    HasText = "Monthly Pay"
-                });                
-                var monthlyPayValue = await monthlyPayRow.Locator("td").Nth(2).InnerTextAsync();
+                    var payslipRowDescription = payTable.Locator("tr").Filter(new()
+                    {
+                        HasText = heading
+                    });
+                    var payslipyPayValue = await payslipRowDescription.Locator("td").Nth(2).InnerTextAsync();
 
-                var taxRow = payTable.Locator("tr").Filter(new()
-                {
-                    HasText = "PAYE Tax"
-                });
-                var taxValue = await taxRow.Locator("td").Nth(2).InnerTextAsync();
-
-                var niRow = payTable.Locator("tr").Filter(new()
-                {
-                    HasText = "National Insurance Contribution"
-                });
-                var niValue = await niRow.Locator("td").Nth(2).InnerTextAsync();
-
-                var takeHomeRow = payTable.Locator("tr").Filter(new()
-                {
-                    HasText = "Take Home Pay"
-                });
-                var takeHomeValue = await takeHomeRow.Locator("td").Nth(2).InnerTextAsync();
-
-                row["Monthly Pay"].Should().Be(monthlyPayValue);
-                row["PAYE Tax"].Should().Be(taxValue);
-                row["National Insurance Contribution"].Should().Be(niValue);
-                row["Take Home Pay"].Should().Be(takeHomeValue);
+                    payslipyPayValue.Should().Be(row[heading], $"Expected {heading} to be {row[heading]}, found {payslipyPayValue}.");
+                    headerIndex++;
+                }               
 
                 await _page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
             }
