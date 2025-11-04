@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="FluentAssertions" Version="8.8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.10" />
@@ -29,6 +30,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\5employees.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\PayRunData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Settings\envs.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
