@@ -107,9 +107,9 @@ namespace PaulsProject.Steps
                     {
                         HasText = heading
                     });
-                    var payslipyPayValue = await payslipRowDescription.Locator("td").Nth(2).InnerTextAsync();
+                    var payslipPayValue = await payslipRowDescription.Locator("td").Nth(2).InnerTextAsync();
 
-                    payslipyPayValue.Should().Be(row[heading], $"Expected {heading} to be {row[heading]}, found {payslipyPayValue}.");
+                    payslipPayValue.Should().Be(row[heading], $"Expected {heading} to be {row[heading]}, found {payslipPayValue}.");
                     headerIndex++;
                 }
 
@@ -183,11 +183,15 @@ namespace PaulsProject.Steps
                     });
                     var payslipPayValue = await payslipRowDescription.Locator("td").Nth(2).InnerTextAsync();
 
-                    payslipPayValue.Should().Be(row[heading.ToString()];, $"Expected {heading} to be {row[heading.ToString()]}, found {payslipPayValue}.");
-                    headerIndex++;
+                    var property = row.GetType().GetProperties()
+                    .FirstOrDefault(p => (p.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? p.Name) == heading);
 
-                    await _page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
+                    var expectedValue = property?.GetValue(row)?.ToString() ?? "";
+
+                    payslipPayValue.Should().Be(expectedValue, $"Expected {heading} to be {expectedValue}, found {payslipPayValue}.");
                 }
+
+                await _page.GetByRole(AriaRole.Button, new() { Name = "Close" }).ClickAsync();
             }
         }
     }

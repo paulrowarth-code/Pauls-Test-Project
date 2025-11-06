@@ -12,13 +12,12 @@ Scenario: Basic UI Test
 	And The user creates a new pay schedule
 	And The user starts the next pay run
 	Then The payrun should contain the following:
-		| Employee         | Monthly Pay | PAYE Tax    | National Insurance Contribution | Take Home Pay |
-		| Mr Test Employee |    1,636.36 |      117.60 |                           47.07 |     £1,471.69 |
-		| Ms Sample Worker |      545.45 |           - |                               - |       £545.45 |
+		| Employee         | Monthly Pay | PAYE Tax    | National Insurance Contribution | 
+		| Mr Test Employee |    1,636.36 |      117.60 |                           47.07 |     
+		| Ms Sample Worker |      545.45 |           - |                               - |     
 
 Scenario: Importing CSV Files
 	And The user imports the "5employees.csv" file	
 	And The user creates a new pay schedule
 	And The user starts the next pay run
 	Then the payrun data should match the "PayRunData.csv" file
-

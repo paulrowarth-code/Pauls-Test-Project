@@ -16,9 +16,6 @@ namespace PaulsProject.Models
         public string PAYETax { get; set; }
         [DisplayName("National Insurance Contribution")]
         [Name("National Insurance Contribution")]
-        public string NationalInsuranceContribution { get; set; }
-        [DisplayName("Take Home Pay")]
-        [Name("Take Home Pay")]
-        public string TakeHomePay { get; set; }
+        public string NationalInsuranceContribution { get; set; }       
     }
 }

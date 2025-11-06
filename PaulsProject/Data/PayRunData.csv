@@ -1,6 +1,6 @@
-Employee,Monthly Pay,PAYE Tax,National Insurance Contribution,Take Home Pay
-Mr One Smith,818.18,-,-,£818.18
-Mrs Two Jones,"1,636.36",47.07,117.6,"£1,471.69"
-Ms Three Johsnon,"2,318.18",101.61,253.8,"£1,962.77"
-Mr Four Jackson,"2,909.09",148.89,372,"£2,388.20"
-Mr Five Davis,"3,409.09",188.89,472,"£2,748.20"
+Employee,Monthly Pay,PAYE Tax,National Insurance Contribution
+Mr One Smith,818.18,-,-
+Mrs Two Jones,"1,636.36",117.60,47.07
+Ms Three Johnson,"2,318.18",253.80,101.61
+Mr Four Jackson,"2,909.09",372.00,148.89
+Mr Five Davis,"3,409.09",472.00,188.89

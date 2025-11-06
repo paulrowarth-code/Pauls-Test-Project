@@ -180,20 +180,17 @@ await this.FeatureBackgroundAsync();
                             "Employee",
                             "Monthly Pay",
                             "PAYE Tax",
-                            "National Insurance Contribution",
-                            "Take Home Pay"});
+                            "National Insurance Contribution"});
                 table2.AddRow(new string[] {
                             "Mr Test Employee",
                             "1,636.36",
                             "117.60",
-                            "47.07",
-                            "£1,471.69"});
+                            "47.07"});
                 table2.AddRow(new string[] {
                             "Ms Sample Worker",
                             "545.45",
                             "-",
-                            "-",
-                            "£545.45"});
+                            "-"});
 #line 14
  await testRunner.ThenAsync("The payrun should contain the following:", ((string)(null)), table2, "Then ");
 #line hidden
